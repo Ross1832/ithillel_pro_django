@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 .flake8
 .idea/
+.notes.py
+.notes
