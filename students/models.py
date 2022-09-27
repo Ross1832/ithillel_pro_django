@@ -1,6 +1,9 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
 from django.utils.datetime_safe import date
+from .validators import valid_email_domains, ValidEmailDomain
+
+VALID_DOMAIN_LIST = ('@gmail.com', '@yahoo.com')
 
 
 class Students(models.Model):
@@ -10,6 +13,7 @@ class Students(models.Model):
                                  validators=[MinLengthValidator(2)],
                                  error_messages={'min_length': '"last_name" field value less then two symbols'})
     birthday = models.DateField(default=date.today, null=True, blank=True)
+    email = models.EmailField(validators=[ValidEmailDomain(*VALID_DOMAIN_LIST)], default=None)
 
     def __str__(self):
         return f"{self.first_name}{self.last_name}"
