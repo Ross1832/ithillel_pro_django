@@ -30,3 +30,11 @@ def validate_unique_email(value):
     for i in s:
         if value == i.email:
             raise ValidationError("Such email already exists")
+
+
+def validate_phone_number(value):
+    extra_characters = '+()-:_'
+    for i in extra_characters:
+        if i in value:
+            value = value.replace(i, '')
+    return value
