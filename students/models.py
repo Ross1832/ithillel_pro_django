@@ -4,6 +4,7 @@ from django.utils.datetime_safe import date
 from .validators import ValidEmailDomain, validate_unique_email, validate_phone_number
 
 
+
 VALID_DOMAIN_LIST = ('@gmail.com', '@yahoo.com')
 
 
