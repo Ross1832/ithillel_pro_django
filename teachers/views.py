@@ -5,36 +5,39 @@ from webargs.djangoparser import use_args
 from webargs.fields import Str
 from django.db.models import Q
 
-from .models import Groups
-from .forms import GroupForm
+from .models import Teacher
+from .forms import TeacherForm
 
 
 @use_args({
-    'name_group': Str(required=False),
+    'name': Str(required=False),
+    'surname': Str(required=False),
     },
     location='query'
 )
-def get_groups(request, args):
-    groups = Groups.objects.all()
+def get_teachers(request, args):
+    teachers = Teacher.objects.all()
 
-    if len(args) != 0 and args.get('name_group'):
-        groups = groups.filter(Q(name_group=args.get('name_group', '')))
+    if len(args) != 0 and args.get('name') or args.get('surname'):
+        teachers = teachers.filter(
+            Q(name=args.get('name', '')) | Q(surname=args.get('surname', ''))
+        )
 
     context = {
-        'title': 'List of Groups',
-        'groups': groups,
+        "title": "List of Teachers",
+        "teachers": teachers,
     }
-    return render(request, 'groups/list_of_group.html', context)
+    return render(request, 'teachers/list_of_teachers.html', context)
 
 
-def create_group(request):
+def create_teacher(request):
     if request.method == "GET":
-        form = GroupForm()
+        form = TeacherForm()
     elif request.method == "POST":
-        form = GroupForm(request.POST)
+        form = TeacherForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/groups/')
+            return HttpResponseRedirect('/teachers/')
 
     token = get_token(request)
     html_form = f"""
@@ -50,20 +53,20 @@ def create_group(request):
     return HttpResponse(html_form)
 
 
-def update_group(request, group_id):
-    group = Groups.objects.get(pk=group_id)
+def update_teacher(request, teacher_id):
+    teacher = Teacher.objects.get(pk=teacher_id)
 
     if request.method == "GET":
-        form = GroupForm(instance=group)
+        form = TeacherForm(instance=teacher)
     elif request.method == "POST":
-        form = GroupForm(request.POST, instance=group)
+        form = TeacherForm(request.POST, instance=teacher)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/groups/')
+        return HttpResponseRedirect('/teachers/')
 
     token = get_token(request)
     html_form = f"""
-    CREATE FORM
+    UPDATE FORM
         <form method="post">
             <input type="hidden" name="csrfmiddlewaretoken" value="{token}">
             <table>
@@ -75,11 +78,9 @@ def update_group(request, group_id):
     return HttpResponse(html_form)
 
 
-def detail_group(request, group_id):
-    group = Groups.objects.get(pk=group_id)
+def detail_teacher(request, teacher_id):
+    teacher = Teacher.objects.get(pk=teacher_id)
     context = {
-        'group': group
+        'teacher': teacher
     }
-    return render(request, 'groups/detail.html', context)
-
-
+    return render(request, 'teachers/detail.html', context)

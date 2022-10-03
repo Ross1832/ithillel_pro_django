@@ -8,10 +8,6 @@ from .models import Student
 from .forms import CreateStudentForm, UpdateStudentForm
 
 
-def index(request):
-    return HttpResponse("Hellow world")
-
-
 @use_args({
     'first_name': Str(required=False),
     'last_name': Str(required=False),
@@ -26,7 +22,6 @@ def get_students(request, args):
             Q(first_name=args.get('first_name', '')) | Q(last_name=args.get('last_name', ''))
         )
 
-    # html = qs2html(students)
     context = {
         'title': 'LIST OF STUDENTS',
         'students': students,
