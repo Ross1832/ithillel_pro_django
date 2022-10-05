@@ -1,7 +1,8 @@
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 from django.middleware.csrf import get_token
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from webargs.djangoparser import use_args
 from webargs.fields import Str
 from .models import Student
@@ -26,7 +27,7 @@ def get_students(request, args):
         'title': 'LIST OF STUDENTS',
         'students': students,
     }
-    return render(request=request, template_name='students/list.html', context=context)
+    return render(request, 'students/list.html', context)
 
 
 def create_student(request):
@@ -36,24 +37,15 @@ def create_student(request):
         form = CreateStudentForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/students/')
-
-    token = get_token(request)
-    html_form = f"""
-    CREATE FORM
-        <form method="post">
-            <input type="hidden" name="csrfmiddlewaretoken" value="{token}">
-            <table>
-                {form.as_table()}
-            </table>
-            <input type="submit" value="Submit">
-        </form>
-    """
-    return HttpResponse(html_form)
+            return HttpResponseRedirect(reverse('students:list'))
+    context = {
+        'form': form,
+    }
+    return render(request, 'students/create.html', context)
 
 
 def update_student(request, student_id):
-    student = Student.objects.get(pk=student_id)
+    student = get_object_or_404(Student, pk=student_id)
 
     if request.method == "GET":
         form = UpdateStudentForm(instance=student)
@@ -61,26 +53,25 @@ def update_student(request, student_id):
         form = UpdateStudentForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/students/')
-
-    token = get_token(request)
-    html_form = f"""
-        UPDATE FORM
-        <form method="post">
-            <input type="hidden" name="csrfmiddlewaretoken" value="{token}">
-            <table>
-                {form.as_table()}
-            </table>
-            <input type="submit" value="Submit">
-        </form>
-    """
-
-    return HttpResponse(html_form)
+            return HttpResponseRedirect(reverse('students:list'))
+    context = {
+        'form': form,
+    }
+    return render(request, 'students/update.html', context)
 
 
 def detail_student(request, student_id):
-    student = Student.objects.get(pk=student_id)
+    student = get_object_or_404(Student, pk=student_id)
     context = {
         'student': student
     }
     return render(request, 'students/detail.html', context)
+
+
+def delete_student(request, student_id):
+    student = get_object_or_404(Student, pk=student_id)
+    if request.method == "POST":
+        student.delete()
+        return HttpResponseRedirect(reverse('students:list'))
+
+    return render(request, 'students/delete.html', {'student': student})
