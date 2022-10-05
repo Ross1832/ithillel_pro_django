@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LMS - {{ title }}</title>
-</head>
-<body>
+{% extends 'base_teachers.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}}
+{%block content %}
     <form method="get">
         <label for="name">Teacher name:</label>
         <input type="text" id="name" name="name" placeholder="teacher name"><br><br>
@@ -15,18 +14,18 @@
         <input type="submit" value="Submit">
     </form>
     <br><br>
-    <a href="create/">Create new teacher</a>
+    <a href="{% url 'teachers:create' %}">Create new teacher</a>
     <table>
     {% for teacher in teachers %}
     <tr>
         <td> {{ teacher.pk }}</td>
         <td> {{ teacher.name }}</td>
         <td> {{ teacher.surname }}</td>
-        <td><a href="update/{{ teacher.pk }}">EDIT</a></td>
-        <td><a href="detail/{{ teacher.pk }}">DETAIL</a></td>
+        <td><a href="{% url 'teachers:update' teacher.id %}">EDIT</a></td>
+        <td><a href="{% url 'teachers:detail' teacher.id %}">DETAIL</a></td>
+        <td><a href="{% url 'teachers:delete' teacher.id %}">DELETE</a></td>
         <br>
     </tr>
     {% endfor %}
     </table>
-</body>
-</html>
+{% endblock %}}

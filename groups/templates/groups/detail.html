@@ -9,6 +9,6 @@ Group name: {{ group.name_group }}<br>
 Start Date: {{ group.data_start }}<br>
 Group description: {{ group.description }}<br>
 <br><br>
-<a href="/groups/">Back</a>
+<a href="{% url 'groups:list' %}">Back</a>
 </body>
 </html>

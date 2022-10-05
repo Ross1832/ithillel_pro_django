@@ -1,6 +1,6 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from django.middleware.csrf import get_token
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from webargs.djangoparser import use_args
 from webargs.fields import Str
 from django.db.models import Q
@@ -34,24 +34,12 @@ def create_group(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/groups/')
-
-    token = get_token(request)
-    html_form = f"""
-    CREATE FORM
-        <form method="post">
-            <input type="hidden" name="csrfmiddlewaretoken" value="{token}">
-            <table>
-                {form.as_table()}
-            </table>
-            <input type="submit" value="Submit">
-        </form>
-    """
-    return HttpResponse(html_form)
+            return HttpResponseRedirect(reverse('groups:list'))
+    return render(request, 'groups/create.html', {'form': form})
 
 
 def update_group(request, group_id):
-    group = Groups.objects.get(pk=group_id)
+    group = get_object_or_404(Groups, pk=group_id)
 
     if request.method == "GET":
         form = GroupForm(instance=group)
@@ -59,27 +47,21 @@ def update_group(request, group_id):
         form = GroupForm(request.POST, instance=group)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/groups/')
-
-    token = get_token(request)
-    html_form = f"""
-    CREATE FORM
-        <form method="post">
-            <input type="hidden" name="csrfmiddlewaretoken" value="{token}">
-            <table>
-                {form.as_table()}
-            </table>
-            <input type="submit" value="Submit">
-        </form>
-    """
-    return HttpResponse(html_form)
+            return HttpResponseRedirect(reverse('groups:list'))
+    return render(request, 'groups/update.html', {'form': form})
 
 
 def detail_group(request, group_id):
-    group = Groups.objects.get(pk=group_id)
+    group = get_object_or_404(Groups, pk=group_id)
     context = {
         'group': group
     }
     return render(request, 'groups/detail.html', context)
 
 
+def delete_group(request, group_id):
+    group = get_object_or_404(Groups, pk=group_id)
+    if request.method == "POST":
+        group.delete()
+        return HttpResponseRedirect(reverse('groups:list'))
+    return render(request, 'groups/delete.html', {'group': group})
