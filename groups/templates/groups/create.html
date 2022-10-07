@@ -1,0 +1,15 @@
+{% extends 'base_groups.html' %}
+
+{% block title %}
+Create new group
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+       {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}

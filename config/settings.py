@@ -1,5 +1,6 @@
 from pathlib import Path
 from os import getenv
+
 from dotenv import load_dotenv
 
 
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
     # apps
     'groups',
     'students',
+    'teachers',
 ]
 
 MIDDLEWARE = [
@@ -48,7 +50,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

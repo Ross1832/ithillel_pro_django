@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail of {{ student.first_name }}{% endblock %}
+{% block content %}
+Teacher name: {{ teacher.name }}<br>
+Teacher surname: {{ teacher.surname }}<br>
+Start Date: {{ teacher.start_date_of_work }}<br>
+Date of birth: {{ teacher.date_of_birth }}<br>
+Phone number: {{ teacher.phone }}<br>
+<br><br>
+<a href="{% url 'teachers:list' %}">Back</a>
+{% endblock %}

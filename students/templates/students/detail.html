@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Detail of {{ student.first_name }}{% endblock %}
+{% block content %}
+    <a href="{% url 'students:detail' student.pk %}">Update Student: {{student.first_name}}</a>
+    <table>
+    <tr>
+        <p> {{ student.pk }}</p>
+        <p> {{ student.first_name }}</p>
+        <p> {{ student.last_name }}</p>
+        <p> {{ student.birthday }}</p>
+        <p> {{ student.email }}</p>
+        <p> {{ student.phone }}</p>
+        <br>
+    </tr>
+    </table>
+    <a href="{% url 'students:list' %}">BACK</a>
+{% endblock %}

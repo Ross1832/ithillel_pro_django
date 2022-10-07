@@ -1,0 +1,16 @@
+{% extends 'base_teachers.html' %}
+
+{% block title %}
+Delete teacher
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+       {% csrf_token %}
+        <table>
+            <p>Do you really want to delete teacher</p>
+        </table>
+        <input type="submit" value="Agree">
+        <a href="{% url 'teachers:list' %}">Cancel</a>
+    </form>
+{% endblock %}

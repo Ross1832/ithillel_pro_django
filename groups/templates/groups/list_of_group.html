@@ -1,0 +1,32 @@
+{% extends 'base_groups.html' %}
+
+
+
+{% block title %}
+{{ title }}
+{% endblock %}}
+
+
+{% block content %}
+    <form method="get">
+        <label for="group_name">Group name:</label>
+        <input type="text" id="group_name" name="group_name" placeholder="Your group"><br><br>
+        <label for="data_start">Start Date:</label>
+        <input type="text" id="data_start" name="data_start" placeholder="01/01/1970"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <br><br>
+    <a href="create/">Create new group</a>
+    <table>
+    {% for group in groups %}
+    <tr>
+        <td> {{ group.pk }}</td>
+        <td> {{ group.name_group }}</td>
+        <td><a href="{% url 'groups:update' group.pk %}">EDIT</a></td>
+        <td><a href="{% url 'groups:detail' group.pk %}">DETAIL</a></td>
+        <td><a href="{% url 'groups:delete' group.pk %}">DELETE</a></td>
+        <br>
+    </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
