@@ -6,7 +6,7 @@ from django.urls import reverse
 from webargs.djangoparser import use_args
 from webargs.fields import Str
 from .models import Student
-from .forms import CreateStudentForm, UpdateStudentForm
+from .forms import CreateStudentForm, UpdateStudentForm, StudentFilterForm
 
 
 @use_args({
@@ -17,15 +17,16 @@ from .forms import CreateStudentForm, UpdateStudentForm
 )
 def get_students(request, args):
     students = Student.objects.all()
-
-    if len(args) != 0 and args.get('first_name') or args.get('last_name'):
-        students = students.filter(
-            Q(first_name=args.get('first_name', '')) | Q(last_name=args.get('last_name', ''))
-        )
+    filter_form = StudentFilterForm(data=request.GET, queryset=students)
+    # if len(args) != 0 and args.get('first_name') or args.get('last_name'):
+    #     students = students.filter(
+    #         Q(first_name=args.get('first_name', '')) | Q(last_name=args.get('last_name', ''))
+    #     )
 
     context = {
         'title': 'LIST OF STUDENTS',
         'students': students,
+        'filter_form': filter_form,
     }
     return render(request, 'students/list.html', context)
 
