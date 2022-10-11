@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
 {% block title %}
 {{ title }}
@@ -6,26 +7,50 @@
 
 
 {%block content %}
-    <form method="get">
-        <label for="first_name">First name:</label>
-        <input type="text" id="first_name" name="first_name" placeholder="John"><br><br>
-        <label for="last_name">Last name:</label>
-        <input type="text" id="last_name" name="last_name" placeholder="Doe"><br><br>
-        <input type="submit" value="Submit">
+<div class="row mb-3">
+        <div class="col">
+            <form method="get">
+<!--            <div class="form-floating mb-3">-->
+<!--                <input type="text" class="form-control" id="floatingFirstName" placeholder="name" name="first_name">-->
+<!--                <label for="floatingFirstName">First Name</label>-->
+<!--            </div>-->
+<!--            <div class="form-floating">-->
+<!--                <input type="text" class="form-control" id="floatingLastName" placeholder="Surname" name="last_name">-->
+<!--                <label for="floatingLastName">Last Name</label>-->
+<!--            </div>-->
+                {{ filter_form.form|crispy }}
+            <input class="btn btn-outline-primary mt-3" type="submit" value="Search">
     </form>
-    <br><br>
-    <a href="create/">Create new student</a>
-    <table>
-    {% for student in students %}
-    <tr>
-        <td> {{ student.pk }}</td>
-        <td> {{ student.first_name }}</td>
-        <td> {{ student.last_name }}</td>
-        <td><a href="{% url 'students:update' student.pk %}">EDIT</a></td>
-        <td><a href="{% url 'students:detail' student.pk %}">DETAIL</a></td>
-        <td><a href="{% url 'students:delete' student.pk %}">Delete</a></td>
-        <br>
-    </tr>
+        </div>
+        <div class="col-6">  </div>
+</div>
+<div class="row">
+    <table class="table table-success table-striped-columns align-middle text-center">
+        <thead>
+            <tr>
+                <th><i class="bi bi-sort-numeric-down"></i></i></th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Age</th>
+                <th><i class="bi bi-brush-fill"></i></th>
+                <th><i class="bi bi-box2-fill"></i></th>
+                <th><i class="bi bi-trash3-fill"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in filter_form.qs %}
+            <tr>
+                <td> {{ forloop.counter }}</td>
+                <td> {{ student.first_name }}</td>
+                <td> {{ student.last_name }}</td>
+                <td>{{ student.get_age }}</td>
+                <td><a href="{% url 'students:update' student.pk %}" type="button" class="btn btn-warning">Edit</a></td>
+                <td><a href="{% url 'students:detail' student.pk %}" class="btn btn-info">Detail</a></td>
+                <td><a href="{% url 'students:delete' student.pk %}" type="button" class="btn btn-danger">Delete</a></td>
+                <br>
+            </tr>
     {% endfor %}
+    </tbody>
+{% endblock %}
     </table>
-{% endblock %}}
+    </div>
