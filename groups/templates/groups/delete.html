@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Delete group
+Delete student
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,7 @@ Delete group
         <table>
             <p>Do you really want to delete student</p>
         </table>
-        <input type="submit" value="Agree">
-        <a href="{% url 'groups:list' %}">Cancel</a>
+        <input class='btn btn-outline-danger' type="submit" value="Agree">
+        <a class='btn btn-outline-success' href="{% url 'groups:list' %}">Cancel</a>
     </form>
 {% endblock %}
