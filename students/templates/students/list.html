@@ -1,49 +1,35 @@
 {% extends 'base.html' %}
+
 {% load crispy_forms_filters %}
 
-{% block title %}
-{{ title }}
-{% endblock %}}
+{% block title %}List of students{% endblock %}
 
-
-{%block content %}
+{% block content %}
 <div class="row mb-3">
-        <div class="col">
-            <form method="get">
-                {{ filter_form.form|crispy }}
-            <input class="btn btn-outline-primary mt-3" type="submit" value="Search">
-    </form>
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Search form
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="col">
+                <form method="get">
+                    {{ filter_form.form|crispy }}
+                    <input class="btn btn-outline-primary mt-3" type="submit" value="Search">
+                </form>
+            </div>
+            <div class="col-6"></div>
+          </div>
         </div>
-        <div class="col-6">  </div>
-</div>
-
-<div class="row">
-    <table class="table table-success table-striped-columns align-middle text-center">
-        <thead>
-            <tr>
-                <th><i class="bi bi-sort-numeric-down"></i></i></th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Age</th>
-                <th><i class="bi bi-brush-fill"></i></th>
-                <th><i class="bi bi-box2-fill"></i></th>
-                <th><i class="bi bi-trash3-fill"></i></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for student in filter_form.qs %}
-            <tr>
-                <td> {{ forloop.counter }}</td>
-                <td> {{ student.first_name }}</td>
-                <td> {{ student.last_name }}</td>
-                <td>{{ student.get_age }}</td>
-                <td><a href="{% url 'students:update' student.pk %}" type="button" class="btn btn-warning">Edit</a></td>
-                <td><a href="{% url 'students:detail' student.pk %}" class="btn btn-info">Detail</a></td>
-                <td><a href="{% url 'students:delete' student.pk %}" type="button" class="btn btn-danger">Delete</a></td>
-                <br>
-            </tr>
-    {% endfor %}
-    </tbody>
-{% endblock %}
-    </table>
+      </div>
     </div>
+</div>
+<div class="row">
+        {% with objects_list=filter_form.qs group_on=True %}
+            {%  include 'includes/students_tab.html' %}
+        {% endwith %}
+    </div>
+{% endblock %}

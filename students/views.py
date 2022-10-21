@@ -7,7 +7,8 @@ from .forms import CreateStudentForm, UpdateStudentForm, StudentFilterForm
 
 
 def get_students(request):
-    students = Student.objects.all()
+    students = Student.objects.select_related('group')
+
     filter_form = StudentFilterForm(data=request.GET, queryset=students)
 
     context = {
