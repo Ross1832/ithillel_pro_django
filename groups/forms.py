@@ -16,7 +16,7 @@ class GroupBaseForm(forms.ModelForm):
 
 class GroupCreateForm(GroupBaseForm):
     from students.models import Student
-    students = forms.ModelMultipleChoiceField(queryset=Student.objects.select_related('group'), requred=False)
+    students = forms.ModelMultipleChoiceField(queryset=Student.objects.select_related('group'), required=False)
 
     def save(self, commit=True):
         group = super().save(commit)

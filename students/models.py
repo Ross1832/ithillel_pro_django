@@ -5,7 +5,6 @@ from django.utils.datetime_safe import date
 from .validators import ValidEmailDomain, validate_phone_number
 from dateutil.relativedelta import relativedelta
 from groups.models import Groups
-from faker import Faker
 
 
 VALID_DOMAIN_LIST = ('@gmail.com', '@yahoo.com')
@@ -38,18 +37,3 @@ class Student(models.Model):
         db_table = 'student_table'
         verbose_name_plural = "Students"
 
-    @classmethod
-    def generate_fake_data(cls, cnt):
-        f = Faker()
-
-        for _ in range(cnt):
-            first_name = f.first_name()
-            last_name = f.last_name()
-            email = f'{first_name}.{last_name}{f.random.choice(VALID_DOMAIN_LIST)}'
-            birthday = f.date()
-            st = cls(first_name=first_name, last_name=last_name, birthday=birthday, email=email)
-            try:
-                st.full_clean()
-                st.save()
-            except ValidationError:
-                print(f'Incorrect data {first_name}, {last_name}, {email}, {birthday}')

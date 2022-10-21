@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'groups',
     'students',
     'teachers',
+    'course',
     # third party
     "crispy_forms",
     "crispy_bootstrap5",

@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
+
 {% load crispy_forms_filters %}
 
-{% block title %}
-List of students
-{% endblock %}
+{% block title %}List of courses{% endblock %}
 
 {% block content %}
 <div class="row mb-3">
@@ -28,10 +27,9 @@ List of students
       </div>
     </div>
 </div>
-
 <div class="row">
         {% with objects_list=filter_form.qs group_on=True %}
-            {%  include 'includes/students_tab.html' %}
+            {%  include 'includes/courses_tab.html' %}
         {% endwith %}
     </div>
 {% endblock %}

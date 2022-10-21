@@ -1,0 +1,23 @@
+<table class="table table-success table-striped-columns align-middle text-center">
+    <thead>
+        <tr align="center">
+            <th style="width: 55px;">N</th>
+            <th>Name</th>
+            <th style="width: 150px;">Course</th>
+            <th style="width: 85px;"><i class="bi bi-pencil-fill"></i></th>
+            <th style="width: 85px;"><i class="bi bi-trash3-fill"></i></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for course in objects_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'course:detail' course.pk %}">{{ course.name }}</a></td>
+                <td>{{ course.group.name_group }}</td>
+                <td align="center"><a class="btn btn-outline-primary btn-sm" href="{% url 'course:update' course.pk %}">Edit</a></td>
+                <td align="center"><a class="btn btn-outline-danger btn-sm" href="{% url 'course:delete' course.pk %}">Delete</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

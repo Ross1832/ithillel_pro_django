@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from .models import Groups
-from .forms import GroupForm, GroupFilterForm
+from .forms import GroupCreateForm, GroupUpdateForm, GroupFilterForm
 
 
 def get_groups(request, ):
@@ -19,9 +19,9 @@ def get_groups(request, ):
 
 def create_group(request):
     if request.method == "GET":
-        form = GroupForm()
+        form = GroupCreateForm()
     elif request.method == "POST":
-        form = GroupForm(request.POST)
+        form = GroupCreateForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('groups:list'))
@@ -32,9 +32,9 @@ def update_group(request, group_id):
     group = get_object_or_404(Groups, pk=group_id)
 
     if request.method == "GET":
-        form = GroupForm(instance=group)
+        form = GroupUpdateForm(instance=group)
     elif request.method == "POST":
-        form = GroupForm(request.POST, instance=group)
+        form = GroupUpdateForm(instance=group, data=request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('groups:list'))
