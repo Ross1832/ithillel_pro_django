@@ -1,5 +1,6 @@
 from django import forms
 from .models import Groups
+from django_filters import FilterSet
 
 
 class GroupForm(forms.ModelForm):
@@ -16,4 +17,9 @@ class GroupForm(forms.ModelForm):
         }
 
 
-
+class GroupFilterForm(FilterSet):
+    class Meta:
+        model = Groups
+        fields = {
+            'name_group': ['exact', 'icontains']
+        }

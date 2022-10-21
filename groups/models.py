@@ -1,4 +1,8 @@
+import datetime
+
 from django.db import models
+from django.utils import timezone
+
 from .validators import validate_start_date
 
 
@@ -7,6 +11,17 @@ class Groups(models.Model):
     data_start = models.DateField(validators=[validate_start_date], null=False,
                                   blank=False,)
     description = models.TextField()
+    start_date = models.DateField(default=datetime.datetime.utcnow)
+    end_date = models.DateField(null=True, blank=True)
+    headman = models.OneToOneField(
+        'students.Student',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='headman_group'
+    )
+    create_datetime = models.DateTimeField(auto_now_add=True, null=True)
+    update_datetime = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = 'Groups'

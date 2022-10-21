@@ -10,20 +10,13 @@
 <div class="row mb-3">
         <div class="col">
             <form method="get">
-<!--            <div class="form-floating mb-3">-->
-<!--                <input type="text" class="form-control" id="floatingFirstName" placeholder="name" name="first_name">-->
-<!--                <label for="floatingFirstName">First Name</label>-->
-<!--            </div>-->
-<!--            <div class="form-floating">-->
-<!--                <input type="text" class="form-control" id="floatingLastName" placeholder="Surname" name="last_name">-->
-<!--                <label for="floatingLastName">Last Name</label>-->
-<!--            </div>-->
                 {{ filter_form.form|crispy }}
             <input class="btn btn-outline-primary mt-3" type="submit" value="Search">
     </form>
         </div>
         <div class="col-6">  </div>
 </div>
+
 <div class="row">
     <table class="table table-success table-striped-columns align-middle text-center">
         <thead>

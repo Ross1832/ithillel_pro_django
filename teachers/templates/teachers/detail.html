@@ -2,11 +2,21 @@
 
 {% block title %}Detail of {{ student.first_name }}{% endblock %}
 {% block content %}
-Teacher name: {{ teacher.name }}<br>
-Teacher surname: {{ teacher.surname }}<br>
-Start Date: {{ teacher.start_date_of_work }}<br>
-Date of birth: {{ teacher.date_of_birth }}<br>
-Phone number: {{ teacher.phone }}<br>
-<br><br>
-<a href="{% url 'teachers:list' %}">Back</a>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            <a href="{% url 'teachers:update' teacher.pk %}">{{ teacher.name }} {{ teacher.surname }}</a>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"> Date of birth: {{ teacher.date_of_birth }}</li>
+            <li class="list-group-item">Start date: {{ teacher.data_start }}</li>
+            <li class="list-group-item">Phone: {{ teacher.phone }}</li>
+        </ul>
+        <a class="btn btn-outline-primary mt-3" href="{% url 'teachers:list' %}">Back to list</a>
+    </div>
+    </div>
+    <div class="col-4"></div>
+</div>
 {% endblock %}

@@ -1,31 +1,46 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
 {% block title %}
 {{ title }}
 {% endblock %}}
+
 {%block content %}
-    <form method="get">
-        <label for="name">Teacher name:</label>
-        <input type="text" id="name" name="name" placeholder="teacher name"><br><br>
-        <label for="surname">Teacher surname:</label>
-        <input type="text" id="surname" name="surname" placeholder="teacher surname"><br><br>
-        <label for="start_date_of_work">Start Date:</label>
-        <input type="text" id="start_date_of_work" name="start_date_of_work" placeholder="01/01/1970"><br><br>
-        <input type="submit" value="Submit">
+<div class="row mb-3">
+        <div class="col">
+            <form method="get">
+                {{ filter_form.form|crispy }}
+            <input class="btn btn-outline-primary mt-3" type="submit" value="Search">
     </form>
-    <br><br>
-    <a href="{% url 'teachers:create' %}">Create new teacher</a>
-    <table>
-    {% for teacher in teachers %}
-    <tr>
-        <td> {{ teacher.pk }}</td>
-        <td> {{ teacher.name }}</td>
-        <td> {{ teacher.surname }}</td>
-        <td><a href="{% url 'teachers:update' teacher.id %}">EDIT</a></td>
-        <td><a href="{% url 'teachers:detail' teacher.id %}">DETAIL</a></td>
-        <td><a href="{% url 'teachers:delete' teacher.id %}">DELETE</a></td>
-        <br>
-    </tr>
+        </div>
+        <div class="col-6">  </div>
+</div>
+
+<div class="row">
+    <table class="table table-success table-striped-columns align-middle text-center">
+        <thead>
+            <tr>
+                <th><i class="bi bi-sort-numeric-down"></i></i></th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th><i class="bi bi-brush-fill"></i></th>
+                <th><i class="bi bi-box2-fill"></i></th>
+                <th><i class="bi bi-trash3-fill"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in filter_form.qs %}
+            <tr>
+                <td> {{ forloop.counter }}</td>
+                <td> {{ teacher.name }}</td>
+                <td> {{ teacher.surname }}</td>
+                <td><a href="{% url 'teachers:update' teacher.pk %}" type="button" class="btn btn-warning">Edit</a></td>
+                <td><a href="{% url 'teachers:detail' teacher.pk %}" class="btn btn-info">Detail</a></td>
+                <td><a href="{% url 'teachers:delete' teacher.pk %}" type="button" class="btn btn-danger">Delete</a></td>
+                <br>
+            </tr>
     {% endfor %}
+    </tbody>
+{% endblock %}
     </table>
-{% endblock %}}
+    </div>

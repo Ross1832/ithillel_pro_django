@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Group Detail</title>
-</head>
-<body>
-Group name: {{ group.name_group }}<br>
-Start Date: {{ group.data_start }}<br>
-Group description: {{ group.description }}<br>
-<br><br>
-<a href="{% url 'groups:list' %}">Back</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Detail of {{ student.name_group }}{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            <a href="{% url 'groups:update' group.pk %}">{{ group.name_group }}</a>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{ group.email }}</li>
+            <li class="list-group-item">{{ group.data_start }}</li>
+            <li class="list-group-item">{{ group.description }}</li>
+        </ul>
+        <a class="btn btn-outline-primary mt-3" href="{% url 'groups:list' %}">Back to list</a>
+    </div>
+    </div>
+    <div class="col-4"></div>
+</div>
+{% endblock %}

@@ -1,32 +1,45 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_filters %}
 
 
 {% block title %}
 {{ title }}
 {% endblock %}}
-
-
-{% block content %}
-    <form method="get">
-        <label for="group_name">Group name:</label>
-        <input type="text" id="group_name" name="group_name" placeholder="Your group"><br><br>
-        <label for="data_start">Start Date:</label>
-        <input type="text" id="data_start" name="data_start" placeholder="01/01/1970"><br><br>
-        <input type="submit" value="Submit">
+{%block content %}
+<div class="row mb-3">
+        <div class="col">
+            <form method="get">
+                {{ filter_form.form|crispy }}
+            <input class="btn btn-outline-primary mt-3" type="submit" value="Search">
     </form>
-    <br><br>
-    <a href="create/">Create new group</a>
-    <table>
-    {% for group in groups %}
-    <tr>
-        <td> {{ group.pk }}</td>
-        <td> {{ group.name_group }}</td>
-        <td><a href="{% url 'groups:update' group.pk %}">EDIT</a></td>
-        <td><a href="{% url 'groups:detail' group.pk %}">DETAIL</a></td>
-        <td><a href="{% url 'groups:delete' group.pk %}">DELETE</a></td>
-        <br>
-    </tr>
+        </div>
+        <div class="col-6">  </div>
+</div>
+
+
+<div class="row">
+    <table class="table table-success table-striped-columns align-middle text-center">
+        <thead>
+            <tr>
+                <th><i class="bi bi-sort-numeric-down"></i></th>
+                <th>Group name</th>
+                <th><i class="bi bi-brush-fill"></i></th>
+                <th><i class="bi bi-box2-fill"></i></th>
+                <th><i class="bi bi-trash3-fill"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in filter_form.qs %}
+            <tr>
+                <td> {{ forloop.counter }}</td>
+                <td> {{ group.name_group }}</td>
+                <td><a href="{% url 'groups:update' group.pk %}" type="button" class="btn btn-warning">Edit</a></td>
+                <td><a href="{% url 'groups:detail' group.pk %}" class="btn btn-info">Detail</a></td>
+                <td><a href="{% url 'groups:delete' group.pk %}" type="button" class="btn btn-danger">Delete</a></td>
+                <br>
+            </tr>
     {% endfor %}
-    </table>
+    </tbody>
 {% endblock %}
+    </table>
+    </div>
