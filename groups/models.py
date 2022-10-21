@@ -8,8 +8,6 @@ from .validators import validate_start_date
 
 class Groups(models.Model):
     name_group = models.CharField(max_length=100, null=False, blank=False)
-    data_start = models.DateField(validators=[validate_start_date], null=False,
-                                  blank=False,)
     description = models.TextField()
     start_date = models.DateField(default=datetime.datetime.utcnow)
     end_date = models.DateField(null=True, blank=True)
@@ -25,3 +23,7 @@ class Groups(models.Model):
 
     class Meta:
         verbose_name_plural = 'Groups'
+        db_table = 'groups'
+
+    def __str__(self):
+        return f'Group name: <{self.name_group}>'
