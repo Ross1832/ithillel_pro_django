@@ -3,7 +3,7 @@
 
 
 {% block title %}
-{{ title }}
+List of groups
 {% endblock %}}
 {%block content %}
 <div class="row mb-3">
@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for group in filter_form.qs %}
+            {% for group in groups %}
             <tr>
                 <td> {{ forloop.counter }}</td>
                 <td> {{ group.name_group }}</td>

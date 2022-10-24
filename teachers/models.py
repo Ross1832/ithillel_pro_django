@@ -1,9 +1,11 @@
 from django.db import models
+from core.models import PersonModel
 
 
-class Teacher(models.Model):
-    name = models.CharField(max_length=200, null=False)
-    surname = models.CharField(max_length=200, null=False)
-    date_of_birth = models.DateField()
+class Teacher(PersonModel):
+    salary = models.PositiveIntegerField(default=10000)
     start_date_of_work = models.DateField()
     phone = models.PositiveIntegerField(null=True)
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name} (${self.salary})'

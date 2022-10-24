@@ -12,7 +12,6 @@ class CreateStudentForm(forms.ModelForm):
             'last_name',
             'birthday',
             'email',
-            'phone',
         ]
 
         widgets = {
@@ -37,7 +36,6 @@ class UpdateStudentForm(forms.ModelForm):
             'first_name',
             'last_name',
             'birthday',
-            'phone',
             'email',
         ]
 

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'students',
     'teachers',
     'course',
+    'core',
     # third party
     "crispy_forms",
     "crispy_bootstrap5",

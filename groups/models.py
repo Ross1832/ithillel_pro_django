@@ -1,12 +1,11 @@
 import datetime
 
 from django.db import models
-from django.utils import timezone
+from core.models import BaseModel
+from teachers.models import Teacher
 
-from .validators import validate_start_date
 
-
-class Groups(models.Model):
+class Groups(BaseModel):
     name_group = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField()
     start_date = models.DateField(default=datetime.datetime.utcnow)
@@ -18,8 +17,12 @@ class Groups(models.Model):
         blank=True,
         related_name='headman_group'
     )
-    create_datetime = models.DateTimeField(auto_now_add=True, null=True)
-    update_datetime = models.DateTimeField(auto_now=True)
+    teachers = models.ManyToManyField(
+        to=Teacher,
+
+        blank=True,
+        related_name='groups'
+    )
 
     class Meta:
         verbose_name_plural = 'Groups'

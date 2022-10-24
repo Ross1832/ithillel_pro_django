@@ -18,21 +18,31 @@ class GroupCreateForm(GroupBaseForm):
     from students.models import Student
     students = forms.ModelMultipleChoiceField(queryset=Student.objects.select_related('group'), required=False)
 
-    def save(self, commit=True):
-        group = super().save(commit)
-        students = self.cleaned_data['students']
-        for student in students:
-            student.group = group
-            student.save()
+    # def save(self, commit=True):
+    #     group = super().save(commit)
+    #     students = self.cleaned_data['students']
+    #     for student in students:
+    #         student.group = group
+    #         student.save()
 
     class Meta(GroupBaseForm.Meta):
         pass
 
 
 class GroupUpdateForm(GroupBaseForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['headman_field'] = forms.ChoiceField(
+            choices=[(st.pk, f'{st.first_name} {st.last_name}') for st in self.instance.students.all()],
+            label='Headman',
+            required=False,
+        )
+        self.fields['headman_field'].choices.insert(0, (0, '--------'))
+
     class Meta(GroupBaseForm.Meta):
         exclude = [
             'start_date',
+            'headman',
         ]
 
 
