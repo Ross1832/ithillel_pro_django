@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'teachers',
     'course',
     'core',
+    'accounts',
     # third party
     "crispy_forms",
     "crispy_bootstrap5",
@@ -94,6 +95,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 3,
+        },
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -134,7 +138,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-
+EMAIL_PORT = 1025
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -144,3 +148,4 @@ if DEBUG:
     import socket  # only if you haven't already imported this
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+

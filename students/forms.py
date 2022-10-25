@@ -49,5 +49,5 @@ class StudentFilterForm(FilterSet):
         model = Student
         fields = {
             'first_name': ['exact', 'icontains'],
-            'last_name': ['exact', 'startswith'],
+            'last_name': ['exact', 'startswith']
         }

@@ -9,7 +9,7 @@
 <div class="row mb-3">
         <div class="col">
             <form method="get">
-                {{ filter_form.form|crispy }}
+                {{ object_list.form|crispy }}
             <input class="btn btn-outline-primary mt-3" type="submit" value="Search">
     </form>
         </div>
@@ -23,20 +23,24 @@
                 <th><i class="bi bi-sort-numeric-down"></i></i></th>
                 <th>First name</th>
                 <th>Last name</th>
+                {% if user.is_authenticated %}
                 <th><i class="bi bi-brush-fill"></i></th>
                 <th><i class="bi bi-box2-fill"></i></th>
                 <th><i class="bi bi-trash3-fill"></i></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
-            {% for teacher in teachers %}
+            {% for teacher in object_list %}
             <tr>
                 <td> {{ forloop.counter }}</td>
                 <td> {{ teacher.first_name }}</td>
                 <td> {{ teacher.last_name }}</td>
+                {% if user.is_authenticated %}
                 <td><a href="{% url 'teachers:update' teacher.pk %}" type="button" class="btn btn-warning">Edit</a></td>
                 <td><a href="{% url 'teachers:detail' teacher.pk %}" class="btn btn-info">Detail</a></td>
                 <td><a href="{% url 'teachers:delete' teacher.pk %}" type="button" class="btn btn-danger">Delete</a></td>
+                {% endif %}
                 <br>
             </tr>
     {% endfor %}

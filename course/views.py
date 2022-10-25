@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -12,27 +13,27 @@ class ListCourseView(ListView):
     context_object_name = 'courses'
 
 
-class UpdateCourseView(UpdateView):
+class UpdateCourseView(LoginRequiredMixin, UpdateView):
     model = Course
     form_class = CourseUpdateForm
     template_name = 'course/update.html'
     success_url = reverse_lazy('course:list')
 
 
-class DetailCourseView(DetailView):
+class DetailCourseView(LoginRequiredMixin, DetailView):
     model = Course
     template_name = 'course/detail.html'
     context_object_name = 'course'
 
 
-class CreateCourseView(CreateView):
+class CreateCourseView(LoginRequiredMixin, CreateView):
     model = Course
     form_class = CourseCreateForm
     template_name = 'course/create.html'
     success_url = reverse_lazy('course:list')
 
 
-class DeleteCourseView(DeleteView):
+class DeleteCourseView(LoginRequiredMixin, DeleteView):
     model = Course
     template_name = 'course/delete.html'
     success_url = reverse_lazy('course:list')

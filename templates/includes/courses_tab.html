@@ -4,10 +4,11 @@
             <th style="width: 55px;">N</th>
             <th>Name</th>
             <th style="width: 150px;">Course</th>
+            {% if user.is_authenticated %}
             <th style="width: 85px;"><i class="bi bi-pencil-fill"></i></th>
             <th style="width: 85px;"><i class="bi bi-box2-fill"></i></th>
             <th style="width: 85px;"><i class="bi bi-trash3-fill"></i></th>
-
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -16,9 +17,11 @@
                 <td>{{ forloop.counter }}</td>
                 <td><a href="{% url 'course:detail' course.pk %}">{{ course.name }}</a></td>
                 <td>{{ course.group.name_group }}</td>
+                {% if user.is_authenticated %}
                 <td align="center"><a class="btn btn-outline-primary btn-sm" href="{% url 'course:update' course.pk %}">Edit</a></td>
                 <td align="center"><a class="btn btn-outline-primary btn-sm" href="{% url 'course:detail' course.pk %}">Detail</a></td>
                 <td align="center"><a class="btn btn-outline-danger btn-sm" href="{% url 'course:delete' course.pk %}">Delete</a></td>
+                {% endif %}
             </tr>
         {% endfor %}
     </tbody>
