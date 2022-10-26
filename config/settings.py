@@ -1,6 +1,6 @@
 from pathlib import Path
 from os import getenv
-
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
 
@@ -142,6 +142,8 @@ EMAIL_PORT = 1025
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+LOGIN_REDIRECT_URL = reverse_lazy('students')
 
 # f using Docker the following will set your INTERNAL_IPS correctly in Debug mode:
 if DEBUG:
