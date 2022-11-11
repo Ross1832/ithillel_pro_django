@@ -1,6 +1,6 @@
 from pathlib import Path
 from os import getenv
-
+from django.urls import reverse_lazy
 from dotenv import load_dotenv
 
 
@@ -33,6 +33,9 @@ INSTALLED_APPS = [
     'groups',
     'students',
     'teachers',
+    'course',
+    'core',
+    'accounts',
     # third party
     "crispy_forms",
     "crispy_bootstrap5",
@@ -48,7 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'config.middlewares.SimpleMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -64,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.filter_params',
             ],
         },
     },
@@ -92,6 +97,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 3,
+        },
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -132,13 +140,16 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-
+EMAIL_PORT = 1025
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+LOGIN_REDIRECT_URL = reverse_lazy('students')
 
 # f using Docker the following will set your INTERNAL_IPS correctly in Debug mode:
 if DEBUG:
     import socket  # only if you haven't already imported this
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+

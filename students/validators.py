@@ -2,15 +2,6 @@ from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 
 
-def valid_email_domains(value):
-    valid_domain = ['@gmail.com', '@yahoo.com', ]
-    for domain in valid_domain:
-        if domain in value:
-            break
-    else:
-        raise ValidationError('Invalid email address.')
-
-
 @deconstructible
 class ValidEmailDomain:
     def __init__(self, *domains):

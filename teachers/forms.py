@@ -7,15 +7,14 @@ class TeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = [
-            'name',
-            'surname',
-            'date_of_birth',
+            'first_name',
+            'last_name',
             'start_date_of_work',
             'phone'
         ]
 
         widgets = {
-            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+            'birthday': forms.DateInput(attrs={'type': 'date'}),
             'start_date_of_work': forms.DateInput(attrs={'type': 'date'}),
         }
 
@@ -24,6 +23,6 @@ class TeacherFilterForm(FilterSet):
     class Meta:
         model = Teacher
         fields = {
-            'name': ['exact', 'icontains'],
-            'surname': ['exact', 'startswith'],
+            'first_name': ['exact', 'icontains'],
+            'last_name': ['exact', 'startswith'],
         }

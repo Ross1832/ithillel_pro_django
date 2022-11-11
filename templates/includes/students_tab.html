@@ -1,4 +1,4 @@
-<table class="table table-striped table-hover">
+<table class="table table-success table-striped-columns align-middle text-center">
     <thead>
         <tr align="center">
             <th style="width: 55px;">N</th>
@@ -8,8 +8,11 @@
             <th style="width: 55px;">Headman</th>
             {% if group_on %}
                 <th style="width: 150px;">Group</th>
+            {% if user.is_authenticated %}
                 <th style="width: 85px;"><i class="bi bi-pencil-fill"></i></th>
+                <th style="width: 85px;"><i class="bi bi-box2-fill"></i></th>
                 <th style="width: 85px;"><i class="bi bi-trash3-fill"></i></th>
+            {% endif %}
             {% endif %}
         </tr>
     </thead>
@@ -24,8 +27,11 @@
                     {% if student.headman_group %}<i class="bi bi-check2-circle"></i>{% endif %}</td>
                 {% if group_on %}
                     <td>{{ student.group.name }}</td>
+                {% if user.is_authenticated %}
                     <td align="center"><a class="btn btn-outline-primary btn-sm" href="{% url 'students:update' student.pk %}">Edit</a></td>
+                    <td align="center"><a class="btn btn-info" href="{% url 'students:detail' student.pk %}">Detail</a></td>
                     <td align="center"><a class="btn btn-outline-danger btn-sm" href="{% url 'students:delete' student.pk %}">Delete</a></td>
+                {% endif %}
                 {% endif %}
             </tr>
         {% endfor %}

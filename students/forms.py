@@ -12,7 +12,6 @@ class CreateStudentForm(forms.ModelForm):
             'last_name',
             'birthday',
             'email',
-            'phone',
         ]
 
         widgets = {
@@ -37,7 +36,6 @@ class UpdateStudentForm(forms.ModelForm):
             'first_name',
             'last_name',
             'birthday',
-            'phone',
             'email',
         ]
 
@@ -51,5 +49,5 @@ class StudentFilterForm(FilterSet):
         model = Student
         fields = {
             'first_name': ['exact', 'icontains'],
-            'last_name': ['exact', 'startswith'],
+            'last_name': ['exact', 'startswith']
         }

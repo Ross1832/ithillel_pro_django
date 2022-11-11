@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block title %}List of courses{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Search form
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="col">
+                <form method="get">
+                    {{ filter_form.form|crispy }}
+                    <input class="btn btn-outline-primary mt-3" type="submit" value="Search">
+                </form>
+            </div>
+            <div class="col-6"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="row">
+        {% with objects_list=filter_form.qs group_on=True %}
+            {%  include 'includes/courses_tab.html' %}
+        {% endwith %}
+    </div>
+{% endblock %}

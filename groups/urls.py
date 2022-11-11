@@ -1,12 +1,12 @@
 from django.urls import path
-from .views import get_groups, create_group, update_group, detail_group, delete_group
+from .views import CreateGroupView, DetailGroupView, DeleteGroupView, ListGroupView, UpdateGroupView
 
 app_name = 'groups'
 
 urlpatterns = [
-    path('', get_groups, name='list'),
-    path('create/', create_group, name='create'),
-    path('update/<int:group_id>/', update_group, name='update'),
-    path('detail/<int:group_id>/', detail_group, name='detail'),
-    path('delete/<int:group_id>/', delete_group, name='delete'),
+    path('', ListGroupView.as_view(), name='list'),
+    path('create/', CreateGroupView.as_view(), name='create'),
+    path('update/<int:pk>/', UpdateGroupView.as_view(), name='update'),
+    path('detail/<int:pk>/', DetailGroupView.as_view(), name='detail'),
+    path('delete/<int:pk>/', DeleteGroupView.as_view(), name='delete'),
 ]

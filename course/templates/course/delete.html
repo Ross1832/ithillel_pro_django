@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete course
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+       {% csrf_token %}
+        <table>
+            <p>Do you really want to delete course</p>
+        </table>
+        <input class='btn btn-outline-danger' type="submit" value="Agree">
+        <a class='btn btn-outline-success' href="{% url 'course:list' %}">Cancel</a>
+    </form>
+{% endblock %}

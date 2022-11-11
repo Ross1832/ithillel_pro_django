@@ -3,13 +3,13 @@
 
 
 {% block title %}
-{{ title }}
+List of groups
 {% endblock %}}
 {%block content %}
 <div class="row mb-3">
         <div class="col">
             <form method="get">
-                {{ filter_form.form|crispy }}
+                {{ object_list.form|crispy }}
             <input class="btn btn-outline-primary mt-3" type="submit" value="Search">
     </form>
         </div>
@@ -23,19 +23,29 @@
             <tr>
                 <th><i class="bi bi-sort-numeric-down"></i></th>
                 <th>Group name</th>
+                <th>Headman</th>
+                {% if user.is_authenticated %}
                 <th><i class="bi bi-brush-fill"></i></th>
                 <th><i class="bi bi-box2-fill"></i></th>
                 <th><i class="bi bi-trash3-fill"></i></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
-            {% for group in filter_form.qs %}
+            {% for group in object_list %}
             <tr>
                 <td> {{ forloop.counter }}</td>
                 <td> {{ group.name_group }}</td>
+                <td>
+                    {% if group.headman %}
+                        {{ group.headman.first_name }} {{ group.headman.last_name }}
+                    {% endif %}
+                </td>
+                {% if user.is_authenticated %}
                 <td><a href="{% url 'groups:update' group.pk %}" type="button" class="btn btn-warning">Edit</a></td>
                 <td><a href="{% url 'groups:detail' group.pk %}" class="btn btn-info">Detail</a></td>
                 <td><a href="{% url 'groups:delete' group.pk %}" type="button" class="btn btn-danger">Delete</a></td>
+                {% endif %}
                 <br>
             </tr>
     {% endfor %}
