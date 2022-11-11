@@ -28,6 +28,10 @@ class CreateStudentForm(forms.ModelForm):
         correct_order = str(value[0]).upper() + str(value[1:]).lower()
         return correct_order
 
+    def clean_phone_number(self):
+        value = self.cleaned_data['phone_number']
+        return "".join(i for i in value if i in "0123456789-()")
+
 
 class UpdateStudentForm(forms.ModelForm):
     class Meta:
