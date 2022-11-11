@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView
 from django.views.generic.edit import ProcessFormView
-
+from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
 
@@ -21,11 +21,10 @@ class AccountRegisterView(CreateView):
 class AccountLoginView(LoginView):
     template_name = 'accounts/login.html'
 
-    # def get_redirect_url(self):
-    #     param_next = self.request.GET.get('next')
-    #     if param_next:
-    #         return param_next
-    #     return reverse('students:list')
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, f'User <{self.request.user}> has successfully logged in.')
+        return response
 
 
 class AccountLogoutView(LoginRequiredMixin, LogoutView):

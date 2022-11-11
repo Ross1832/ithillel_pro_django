@@ -11,11 +11,21 @@ from core.views import CustomUpdateBaseView
 class ListStudentView(ListView):
     model = Student
     template_name = 'students/list.html'
+    paginate_by = 2
 
-    def get_queryset(self):
+    def get_filter(self):
         students = Student.objects.select_related('group')
         filter_form = StudentFilterForm(data=self.request.GET, queryset=students)
         return filter_form
+
+    def get_queryset(self):
+        return self.get_filter().qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.get_filter().form
+        context['counter'] = 0
+        return context
 
 
 class UpdateStudentView(LoginRequiredMixin, UpdateView):
